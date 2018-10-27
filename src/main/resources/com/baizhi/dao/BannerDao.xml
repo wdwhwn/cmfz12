@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.BannerDao" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.Banner" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, name, url, status, createDate, description
+    from banner
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, url, status, createDate, description
+    from banner
+  </select>
+  <!--分页查询-->
+    <select id="selectAllByPage" resultType="com.baizhi.entity.Banner">
+      select * from banner where status=0 limit #{start},#{rows}
+    </select>
+  <!--分页个数-->
+  <select id="count" resultType="java.lang.Integer">
+    select count(*) from banner where status=0
+  </select>
+<!--添加-->
+  <insert id="insert" parameterType="com.baizhi.entity.Banner" >
+    insert into banner (id, name, url,
+    status, createDate, description
+    )
+    values (0, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+    #{status}, #{createdate,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}
+    )
+  </insert>
+  <!--修改-->
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Banner" >
+    update banner
+    set
+    status = #{status,jdbcType=INTEGER},
+    createDate = sysdate()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--批量删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from banner
+    where id in
+      <foreach collection="array" open="(" close=")" separator="," item="c">
+           #{c}
+      </foreach>
+  </delete>
+</mapper>

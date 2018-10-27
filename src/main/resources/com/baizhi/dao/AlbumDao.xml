@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.Album" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="name" jdbcType="VARCHAR" />
+    <result column="coverImg" property="coverimg" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="broadCast" property="broadcast" jdbcType="VARCHAR" />
+    <result column="brief" property="brief" jdbcType="VARCHAR" />
+    <result column="publisDate" property="publisdate" jdbcType="DATE" />
+    <collection property="children" ofType="com.baizhi.entity.Chapter"  >
+      <id column="id1" property="id"  />
+      <result column="title1" property="name" jdbcType="VARCHAR" />
+      <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="size" property="size"  />
+      <result column="duration" property="duration" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from album
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Album" >
+    update album
+    set title = #{title,jdbcType=VARCHAR},
+      coverImg = #{coverimg,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      broadCast = #{broadcast,jdbcType=VARCHAR},
+      brief = #{brief,jdbcType=VARCHAR},
+      publisDate = #{publisdate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, title, coverImg, count, score, author, broadCast, brief, publisDate
+    from album
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, coverImg, count, score, author, broadCast, brief, publisDate
+    from album
+  </select>
+  <!--专辑表和章节表  连接查询-->
+    <select id="selectAll1" resultMap="BaseResultMap">
+      select a.*,b.id id1,b.title title1,b.url,b.size,b.duration from album a left join chapter b on a.id=b.aid
+    </select>
+  <!--查询总数-->
+  <select id="count" resultType="java.lang.Integer">
+    select * from album a left join chapter c on a.id=c.aid
+  </select>
+  <!--查询专辑-->
+  <select id="selectOne" resultMap="BaseResultMap">
+    select *
+     from album where id=#{id}
+  </select>
+  <!--查询专辑 通过二级id-->
+  <select id="selectOne1" resultMap="BaseResultMap">
+     select * from album a left join chapter c on a.id=c.aid where c.id=#{id}
+  </select>
+<!--添加专辑-->
+  <insert id="insert" parameterType="com.baizhi.entity.Album" >
+    insert into album (id, title, coverImg,
+    count, score, author,
+    broadCast, brief, publisDate
+    )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{coverimg,jdbcType=VARCHAR},
+    #{count,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR},
+    #{broadcast,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{publisdate,jdbcType=DATE}
+    )
+  </insert>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDao" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.Chapter" >
+    <id column="id" property="id"  />
+    <result column="title" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="size" property="size"  />
+    <result column="duration" property="duration" jdbcType="VARCHAR" />
+    <result column="aid" property="aid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey"  >
+    delete from chapter
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.baizhi.entity.Chapter" >
+    insert into chapter (id, title, url, 
+      size, duration, aid)
+    values (#{id}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{size}, #{duration,jdbcType=VARCHAR}, #{aid,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Chapter" >
+    update chapter
+    set title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      size = #{size},
+      duration = #{duration,jdbcType=VARCHAR},
+      aid = #{aid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap"  >
+    select id, title, url, size, duration, aid
+    from chapter
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, url, size, duration, aid
+    from chapter
+  </select>
+</mapper>
