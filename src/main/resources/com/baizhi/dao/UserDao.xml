@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="head_pic" property="headPic" jdbcType="VARCHAR" />
+    <result column="dharma_name" property="dharmaName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+    <result column="phoneNum" property="phonenum" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="regDate" property="regdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baizhi.entity.User" >
+    insert into user (id, head_pic, dharma_name, 
+      name, sex, province, 
+      city, sign, phoneNum, 
+      password, salt, status, 
+      regDate)
+    values (#{id,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{dharmaName,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{phonenum,jdbcType=INTEGER}, 
+      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{regdate,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.User" >
+    update user
+    set head_pic = #{headPic,jdbcType=VARCHAR},
+      dharma_name = #{dharmaName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR},
+      phoneNum = #{phonenum,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      regDate = #{regdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, head_pic, dharma_name, name, sex, province, city, sign, phoneNum, password, 
+    salt, status, regDate
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--分页查询-->
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, head_pic, dharma_name, name, sex, province, city, sign, phoneNum, password, 
+    salt, status, regDate from user limit #{start},#{rows}
+  </select>
+  <!--统计总数-->
+  <select id="count" resultType="java.lang.Integer">
+      select count(*) from user
+
+  </select>
+
+
+</mapper>
