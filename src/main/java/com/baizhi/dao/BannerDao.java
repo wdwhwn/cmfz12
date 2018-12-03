@@ -9,7 +9,7 @@ public interface BannerDao {
 
     Banner selectByPrimaryKey(Integer id);
 
-    List<Banner> selectAll();
+
 
 //    分页查询  轮播图
     List<Banner> selectAllByPage(@Param("start") int start, @Param("rows") int rows);
@@ -22,6 +22,10 @@ public interface BannerDao {
 
 //  批量删除
     int deleteByPrimaryKey(int[] ids);
+
+//    =====接口方法
+//    查询全部
+        List<Banner> selectAll();
 
 
 }

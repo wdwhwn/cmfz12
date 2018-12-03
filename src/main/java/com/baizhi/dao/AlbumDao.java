@@ -28,4 +28,8 @@ public interface AlbumDao {
 //    添加专辑
     void insert(Album album);
 
+//=============首页接口dao层方法===========
+//    首页推荐最新的6个章节
+    List<Album> selectByFirst();
+
 }

@@ -19,4 +19,6 @@ public interface AlbumService {
     Album selectOne1(int id);
 //    添加
     void insert(MultipartFile multipartFile, Album album, HttpServletRequest request);
+
+
 }

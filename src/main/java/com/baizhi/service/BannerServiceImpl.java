@@ -47,4 +47,5 @@ private BannerDao bd;
             e.printStackTrace();
         }
     }
+
 }

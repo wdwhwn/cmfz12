@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticalDao" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.Artical" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="insert_img" property="insertImg" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="guruId" property="guruid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from artical
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baizhi.entity.Artical" >
+    insert into artical (id, title, insert_img, 
+      content, publish_date, guruId
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{insertImg,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, #{guruid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Artical" >
+    update artical
+    set title = #{title,jdbcType=VARCHAR},
+      insert_img = #{insertImg,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      guruId = #{guruid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, title, insert_img, content, publish_date, guruId
+    from artical
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, insert_img, content, publish_date, guruId
+    from artical
+  </select>
+  <!--首页接口-->
+  <!--展示上师两篇文章-->
+  <select id="selectByGuru" resultType="com.baizhi.entity.Artical">
+    select * from artical where guruId ==#{guruId} order by publish_date limit 0,2
+  </select>
+  <!--展示其它上师两篇文章-->
+  <select id="selectByGuru1" resultType="com.baizhi.entity.Artical">
+    select * from artical where guruId != #{guruId} order by publish_date limit 0,2
+
+  </select>
+</mapper>

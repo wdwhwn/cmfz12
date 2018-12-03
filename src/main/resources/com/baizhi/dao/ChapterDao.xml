@@ -37,4 +37,8 @@
     select id, title, url, size, duration, aid
     from chapter
   </select>
+  <!--接口方法-->
+  <select id="selectAll1" resultType="com.baizhi.entity.Chapter">
+    select * from chapter where id=#{id}
+  </select>
 </mapper>

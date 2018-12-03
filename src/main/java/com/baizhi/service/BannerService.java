@@ -2,6 +2,7 @@ package com.baizhi.service;
 
 import com.baizhi.entity.Banner;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +19,6 @@ public interface BannerService {
     void updateByPrimaryKey(int id, int status);
 //    批量删除
     void deleteByPrimaryKey(int[] ids);
+
 
 }

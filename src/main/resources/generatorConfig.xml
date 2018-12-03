@@ -35,6 +35,6 @@
 	 
 	 <javaClientGenerator targetPackage="com.baizhi.dao" type="XMLMAPPER" targetProject="cmfz-wd/src/main/java"/>
 		<!-- tableNAme 表名 domainObjectName= 指定生成后的实体名字 -->
-		<table tableName="user" domainObjectName="User"></table>
+		<table tableName="artical" domainObjectName="Artical"></table>
 	 </context>
 </generatorConfiguration>

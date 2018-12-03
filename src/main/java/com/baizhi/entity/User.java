@@ -14,13 +14,15 @@ public class User implements Serializable {
 
     private Integer sex;
 
+    private String location;
+
     private String province;
 
     private String city;
 
     private String sign;
 
-    private Integer phonenum;
+    private String phonenum;
 
     private String password;
 
@@ -30,7 +32,28 @@ public class User implements Serializable {
 
     private Date regdate;
 
-    private static final long serialVersionUID = 1L;
+    private Integer guruId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", headPic='" + headPic + '\'' +
+                ", dharmaName='" + dharmaName + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", location='" + location + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", sign='" + sign + '\'' +
+                ", phonenum='" + phonenum + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", status='" + status + '\'' +
+                ", regdate=" + regdate +
+                ", guruId=" + guruId +
+                '}';
+    }
 
     public Integer getId() {
         return id;
@@ -72,6 +95,14 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getProvince() {
         return province;
     }
@@ -96,11 +127,11 @@ public class User implements Serializable {
         this.sign = sign;
     }
 
-    public Integer getPhonenum() {
+    public String getPhonenum() {
         return phonenum;
     }
 
-    public void setPhonenum(Integer phonenum) {
+    public void setPhonenum(String phonenum) {
         this.phonenum = phonenum;
     }
 
@@ -136,26 +167,32 @@ public class User implements Serializable {
         this.regdate = regdate;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", headPic=").append(headPic);
-        sb.append(", dharmaName=").append(dharmaName);
-        sb.append(", name=").append(name);
-        sb.append(", sex=").append(sex);
-        sb.append(", province=").append(province);
-        sb.append(", city=").append(city);
-        sb.append(", sign=").append(sign);
-        sb.append(", phonenum=").append(phonenum);
-        sb.append(", password=").append(password);
-        sb.append(", salt=").append(salt);
-        sb.append(", status=").append(status);
-        sb.append(", regdate=").append(regdate);
-        sb.append("]");
-        return sb.toString();
+    public Integer getGuruId() {
+        return guruId;
+    }
+
+    public void setGuruId(Integer guruId) {
+        this.guruId = guruId;
+    }
+
+    public User() {
+    }
+
+    public User(Integer id, String headPic, String dharmaName, String name, Integer sex, String location, String province, String city, String sign, String phonenum, String password, String salt, String status, Date regdate, Integer guruId) {
+        this.id = id;
+        this.headPic = headPic;
+        this.dharmaName = dharmaName;
+        this.name = name;
+        this.sex = sex;
+        this.location = location;
+        this.province = province;
+        this.city = city;
+        this.sign = sign;
+        this.phonenum = phonenum;
+        this.password = password;
+        this.salt = salt;
+        this.status = status;
+        this.regdate = regdate;
+        this.guruId = guruId;
     }
 }

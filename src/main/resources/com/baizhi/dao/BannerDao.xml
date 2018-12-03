@@ -16,10 +16,7 @@
     from banner
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, name, url, status, createDate, description
-    from banner
-  </select>
+
   <!--分页查询-->
     <select id="selectAllByPage" resultType="com.baizhi.entity.Banner">
       select * from banner where status=0 limit #{start},#{rows}
@@ -54,4 +51,11 @@
            #{c}
       </foreach>
   </delete>
+
+  <!--轮播图接口-->
+  <!--查询全部的轮播图-->
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, url, status, createDate, description
+    from banner
+  </select>
 </mapper>

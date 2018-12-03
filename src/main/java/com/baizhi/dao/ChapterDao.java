@@ -14,4 +14,6 @@ public interface ChapterDao {
     List<Chapter> selectAll();
 
     int updateByPrimaryKey(Chapter record);
+    /*接口方法*/
+    List<Chapter> selectAll1(int id);
 }

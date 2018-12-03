@@ -62,7 +62,8 @@
   <select id="selectOne1" resultMap="BaseResultMap">
      select * from album a left join chapter c on a.id=c.aid where c.id=#{id}
   </select>
-<!--添加专辑-->
+
+    <!--添加专辑-->
   <insert id="insert" parameterType="com.baizhi.entity.Album" >
     insert into album (id, title, coverImg,
     count, score, author,
@@ -73,4 +74,10 @@
     #{broadcast,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{publisdate,jdbcType=DATE}
     )
   </insert>
+
+  <!--首页接口-->
+  <!--查询最新的6个专辑-->
+  <select id="selectByFirst" resultType="com.baizhi.entity.Album">
+    select * from album order by publisDate limit 0,6
+  </select>
 </mapper>

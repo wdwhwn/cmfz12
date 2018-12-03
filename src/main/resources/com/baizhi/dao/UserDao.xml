@@ -8,9 +8,11 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="guruId" property="guruId"  />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="sign" property="sign" jdbcType="VARCHAR" />
-    <result column="phoneNum" property="phonenum" jdbcType="INTEGER" />
+    <result column="phoneNum" property="phonenum"  />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -22,48 +24,116 @@
   </delete>
   <insert id="insert" parameterType="com.baizhi.entity.User" >
     insert into user (id, head_pic, dharma_name, 
-      name, sex, province, 
+      name, sex, province, location,
       city, sign, phoneNum, 
       password, salt, status, 
       regDate)
-    values (#{id,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{dharmaName,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR}, #{dharmaName,jdbcType=VARCHAR},
       #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{phonenum,jdbcType=INTEGER}, 
+      #{city,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{phonenum},
       #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{regdate,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.User" >
-    update user
-    set head_pic = #{headPic,jdbcType=VARCHAR},
-      dharma_name = #{dharmaName,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      sign = #{sign,jdbcType=VARCHAR},
-      phoneNum = #{phonenum,jdbcType=INTEGER},
-      password = #{password,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      status = #{status,jdbcType=VARCHAR},
-      regDate = #{regdate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, head_pic, dharma_name, name, sex, province, city, sign, phoneNum, password, 
-    salt, status, regDate
-    from user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+
+
   <!--分页查询-->
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, head_pic, dharma_name, name, sex, province, city, sign, phoneNum, password, 
-    salt, status, regDate from user limit #{start},#{rows}
+    select id, head_pic, dharma_name, name, sex,location, province, city, sign, phoneNum, password,
+    salt, status, regDate,guruId from user limit #{start},#{rows}
   </select>
   <!--统计总数-->
   <select id="count" resultType="java.lang.Integer">
       select count(*) from user
 
   </select>
+<!--查询全部-->
+  <select id="selectAll1" resultMap="BaseResultMap" >
+    select id, head_pic, dharma_name, name, sex, location,province, city, sign, phoneNum, password,guruId
+    salt, status, regDate from user
+  </select>
+
+<!--批量添加-->
+  <insert id="insert1">
+    insert into user
+    values
+    <foreach collection="list" item="m" index="index" separator="," close="" open="">
+      (0 ,'123', #{m.dharmaName} , #{m.name} , #{m.sex} , #{m.province} , #{m.city} , #{m.sign} , #{m.phonenum} , #{m.password} ,
+      #{m.salt} , #{m.status} ,#{guruId}, #{m.regdate},#{m.location} )
+    </foreach>
+
+  </insert>
 
 
+  <!--接口的方法-->
+  <!--查询上师id-->
+  <select id="selectById" resultType="java.lang.Integer">
+
+    select guruId from USER where id=#{uid}
+  </select>
+<!--查询用户-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, head_pic, dharma_name, name, sex, province, city, sign, phoneNum, password,
+    salt, status, regDate,location,guruId
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--通过密码查询是否登录成功-->
+  <select id="selectOne" resultType="com.baizhi.entity.User">
+    select * from USER  where phoneNum=#{phone} and password=#{password}
+
+  </select><!--通过加密查询是否登录成功-->
+  <select id="selectOne1" resultType="com.baizhi.entity.User">
+    select * from USER  where salt=#{salt} and password=#{password}
+
+  </select>
+
+  <!--注册-->
+  <insert id="insert2">
+    insert into user(phoneNum,password) values(#{phone},#{password})
+  </insert>
+
+  <!--查询用户id-->
+  <select id="selectId" resultType="integer">
+    select id from user where password=#{password} and phoneNum=#{phone}
+  </select>
+
+  <!--修改-->
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.User" >
+    update user
+    set head_pic = #{headPic,jdbcType=VARCHAR},
+    dharma_name = #{dharmaName,jdbcType=VARCHAR},
+    name = #{name,jdbcType=VARCHAR},
+    sex = #{sex,jdbcType=INTEGER},
+    location=#{location},
+    province = #{province,jdbcType=VARCHAR},
+    city = #{city,jdbcType=VARCHAR},
+    sign = #{sign,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    salt = #{salt,jdbcType=VARCHAR},
+    status = #{status,jdbcType=VARCHAR},
+    guruId = #{guruId,jdbcType=VARCHAR},
+    regDate = #{regdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--查询金刚道友-->
+  <select id="selectAll2" resultType="com.baizhi.entity.User">
+    select  * from user where id!=#{id} limit 0,5
+  </select>
+  <!--验证手机号-->
+  <select id="selectByPhone" resultType="com.baizhi.entity.User">
+    select * from user where phoneNum=#{phoneNum}
+
+  </select>
+  <!--一周内注册人数-->
+  <select id="count1" resultType="java.lang.Integer">
+    select count(*) from user where datediff(SYSDATE(),regDate)&lt;7;
+  </select>
+  <!--二周内注册人数-->
+  <select id="count2" resultType="java.lang.Integer">
+    select count(*) from user where datediff(SYSDATE(),regDate)&lt;14;
+  </select>
+  <!--三周内注册人数-->
+  <select id="count3" resultType="java.lang.Integer">
+    select count(*) from user where datediff(SYSDATE(),regDate) &lt;21;
+  </select>
 </mapper>

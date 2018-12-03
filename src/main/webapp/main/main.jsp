@@ -13,6 +13,7 @@
 <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="../js/datagrid-detailview.js"></script>
 <script type="text/javascript" src="../js/jquery.edatagrid.js"></script>
+    <script src="../js/echarts.min.js"></script>
     <!-- 需要引入两个css文件：图标样式文件，easyUI样式文件 -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/themes/default/easyui.css">
